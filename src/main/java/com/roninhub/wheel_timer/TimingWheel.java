@@ -51,8 +51,8 @@ public class TimingWheel {
 
         TimerTask newTask = new TimerTask(deviceId, rounds, slotIndex);
 
-        slots.get(slotIndex).add(newTask);
-        taskMap.put(deviceId, newTask);
+        slots.get(slotIndex).add(newTask);  // add to bucket O(1)
+        taskMap.put(deviceId, newTask);     // put to map O(1)
     }
 
     private void advanceClock() {
@@ -60,14 +60,14 @@ public class TimingWheel {
         Set<TimerTask> bucket = slots.get(slotIndex);
         Iterator<TimerTask> iterator = bucket.iterator();
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext()) { // O(M)
             TimerTask task = iterator.next();
             if (task.getRemainingRounds() > 0) {
                 task.decreaseRounds();
             } else {
                 // Timer expired
-                iterator.remove();
-                taskMap.remove(task.getDeviceId());
+                iterator.remove(); // O(1)
+                taskMap.remove(task.getDeviceId()); // O(1)
                 // Handle the timeout (e.g., raise an alert)
                 onTimeout(task.getDeviceId());
             }

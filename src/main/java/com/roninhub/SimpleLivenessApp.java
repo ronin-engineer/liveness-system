@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class CustomLivenessApp
+public class SimpleLivenessApp
 {
     public static void main(String[] args) {
         HeartbeatMonitor monitor = new HeartbeatMonitor(1000, 60); // Tick duration: 1 second
